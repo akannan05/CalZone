@@ -9,13 +9,13 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 
-cur.execute('DROP TABLE IF EXISTS user_account;')
-cur.execute('DROP TABLE IF EXISTS foods;')
-cur.execute('DROP TABLE IF EXISTS user_foods;')
+cur.execute('DROP TABLE IF EXISTS user_account CASCADE;')
+cur.execute('DROP TABLE IF EXISTS foods CASCADE;')
+cur.execute('DROP TABLE IF EXISTS user_foods CASCADE;')
 cur.execute('CREATE TABLE user_account (user_id serial PRIMARY KEY,'
-                                        'username varchar (150) UNIQUE NOT NULL,'
-                                        'password varchar (50) NOT NULL,'
-                                        'govt_name varchar (80) NOT NULL,'
+                                        'username varchar (180) UNIQUE NOT NULL,'
+                                        'password varchar (180) NOT NULL,'
+                                        'govt_name varchar (100) NOT NULL,'
                                         'weight REAL,'
                                         'height REAL);'
             )

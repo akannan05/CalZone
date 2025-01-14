@@ -1,9 +1,12 @@
 import os
 import psycopg2
+import secrets
 
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, session
 
 app = Flask(__name__)
+
+app.secret_key = secrets.token_hex(16)
 
 def get_db_connection():
     conn = psycopg2.connect(host='localhost',
@@ -24,7 +27,7 @@ def main_page():
     conn.close()
     return render_template('index.html', users=users)
 
-@app.route('/create/', methods=('GET', 'POST'))
+@app.route('/signup/', methods=('GET', 'POST'))
 def signup():
     if request.method == 'POST':
         username = request.form['username']
@@ -35,7 +38,7 @@ def signup():
         cur = conn.cursor()
         cur.execute('''
             INSERT INTO user_account (username, password, govt_name, weight, height)
-            VALUES (%s, %s, %s, %s, %s);
+            VALUES (%s, crypt(%s, gen_salt('bf')), %s, %s, %s);
         ''', (username, password, govt_name, None, None))
         
         conn.commit()
@@ -66,3 +69,26 @@ def add_food():
         conn.close()
         return redirect(url_for('main_page'))
     return render_template('addfood.html')
+
+@app.route('/login/', methods=('GET', 'POST'))
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''
+            SELECT username
+            FROM user_account
+            WHERE username = %s AND password = crypt(%s, password);
+        ''', (username, password))
+
+        user = cur.fetchone()
+        if user is not None:
+            print("Successful Login!")
+            return redirect(url_for('main_page'))
+        else:
+            print("Invalid Login Information. Check username and password.")
+    return render_template('login.html')
+
