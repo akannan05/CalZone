@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Welcome to CalZone! {% endblock %}</h1>
+
+<form id="signupForm" method="post">
+    <p>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="Enter Username">
+        <span id="usernameError" class="error-message"></span>
+    </p>
+
+    <p>
+        <label for="password">Password</label>
+        <input type="text" name="password" placeholder="Enter Password">
+    </p>
+
+    <p>
+        <label for="govt_name">Full Name</label>
+        <input type="text" name="govt_name" placeholder="Enter Full Name">
+    </p>
+
+    <p>
+        <button type="submit">Submit</button>
+    </p>
+</form>
+
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+
+{% endblock %}
+
+

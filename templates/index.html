@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title%} User {% endblock %}</h1>
+    {% for user in users %}
+        <div class='user'>
+            <h3>#{{user[0]}} - {{user[1]}} AKA {{user[3]}}</h3>
+        </div>
+    {% else %}
+        <p>No users found.</p>
+    {% endfor %}
+{% endblock %}

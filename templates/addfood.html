@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Can't find what you're looking for? Add a Food here. {% endblock %}</h1>
+    <form method="post">
+        <p>
+            <label for="food_name">Food Name</label>
+            <input type="text" name="food_name"
+                   placeholder="Enter Name">
+            </input>
+        </p>
+
+        <p>
+            <label for="brand_name">Brand Name</label>
+            <input type="text" name="brand_name"
+                   placeholder="Enter Brand/Restaurant">
+            </input>
+        </p>
+
+        <p> Nutritional Information: </p>
+            <li> 
+                <label for="calories">Calories</label>
+                <input type="number" name="calories"
+                       placeholder="Enter Calories">
+                </input>
+            </li>
+            <li> 
+                <label for="protein">Protein (g)</label>
+                <input type="number" name="protein"
+                       placeholder="Enter Protein">
+                </input>
+            </li>
+            <li> 
+                <label for="">Fat (g)</label>
+                <input type="number" name="fat"
+                       placeholder="Enter Fat">
+                </input>
+            </li>
+            <li> 
+                <label for="carbs">Carbs (g)</label>
+                <input type="number" name="carbs"
+                       placeholder="Enter Carbs">
+                </input>
+            </li>
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+    </form>
+{% endblock %}

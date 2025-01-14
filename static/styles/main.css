@@ -1,0 +1,15 @@
+nav a{
+    color: #000000;
+    font-size: 3em;
+    text-align: right;
+    margin-right: 50px;
+    text-decoration: none;
+}
+
+.error-message{
+    colot: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
