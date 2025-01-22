@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Start your fitness journey by logging with CalZone. {% endblock %}</h1>
+    <form method="post">
+        <p>
+            <label for="food_name">Food Name</label>
+            <select name="food_id" id="food-select">
+                {% for food in foods %}
+                    <option value="{{food[0]}}">{{food[1]}} from {{food[2]}}
+                {% else %}
+                    <option value="">--No Foods in Database :(--</option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label for="num_servings">Servings</label>
+            <input type="number" name="num_servings"
+                   placeholder="Enter # Servings">
+            </input>
+        </p>
+
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+    </form>
+{% endblock %}
