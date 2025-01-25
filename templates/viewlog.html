@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title%} User {% endblock %}</h1>
+    {% for food in logged_foods %}
+        {% set food_data = food_info_dict[food[1]] %}
+        <li>
+            {{ food[2] }} servings of {{ food_data[1] }} from {{ food_data[2] }}:
+            {{ food[4] }} calories, {{ food[5] }}g of protein, {{ food[6] }}g of fat, {{
+            food[7] }}g of carbs. Consumed on {{ food[3] }}.
+    {% else %}
+        <p>No logged food.</p>
+    {% endfor %}
+{% endblock %}

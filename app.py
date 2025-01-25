@@ -98,8 +98,6 @@ def log_food():
         
         food_info = cur.fetchone()
         
-        print(f"Type of food_info: {food_info}")
-
         log_calories = float(food_info[3])*servings
         log_protein = float(food_info[4])*servings
         log_fat = float(food_info[5])*servings
@@ -116,6 +114,29 @@ def log_food():
         conn.close()
         return redirect(url_for('main_page'))
     return render_template('logfood.html', foods=foods)
+
+@app.route('/view-log/')
+@login_required
+def view_log():
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM user_foods WHERE user_id=%s;', (user_id,))
+    logged_foods = cur.fetchall()
+
+    logged_food_ids = []
+    for row in logged_foods:
+        logged_food_ids.append(row[1])
+
+    cur.execute('SELECT * FROM foods WHERE food_id IN %s;', (tuple(logged_food_ids),))
+    food_info = cur.fetchall()
+
+    food_info_dict = {food[0]: food for food in food_info} 
+
+    cur.close()
+    conn.close()
+    return render_template('viewlog.html', logged_foods=logged_foods,
+                           food_info_dict=food_info_dict)
 
 @app.route('/login/', methods=('GET', 'POST'))
 def login():
